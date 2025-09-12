@@ -26,6 +26,9 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
   -- Tema
   { "folke/tokyonight.nvim", lazy = false, priority = 1000, opts = {} },
+    
+    -- Señales de Git en la columna lateral
+    { "lewis6991/gitsigns.nvim" },
 
     -- Linting
     {
@@ -454,6 +457,17 @@ cmp.setup({
 })
 
 
+-- Gitsigns (integración con Git en la sign column)
+require("gitsigns").setup({
+  signs = {
+    add          = { text = "┃" },
+    change       = { text = "┃" },
+    delete       = { text = "_" },
+    topdelete    = { text = "‾" },
+    changedelete = { text = "~" },
+  },
+  current_line_blame = true, -- Muestra autor y fecha de la última modificación en la línea
+})
 
 -- =========================
 -- Atajos rápidos (Keymaps)
