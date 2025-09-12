@@ -27,7 +27,6 @@ require("lazy").setup({
   -- Tema
   { "folke/tokyonight.nvim", lazy = false, priority = 1000, opts = {} },
 
-
     -- Linting
     {
       "mfussenegger/nvim-lint",
@@ -67,22 +66,40 @@ require("lazy").setup({
         end, { desc = "Format file" })
       end,
     },
+   
+    
+    {
+      "akinsho/toggleterm.nvim",
+      version = "*",
+      config = function()
+        require("toggleterm").setup({
+          direction = "float",
+          float_opts = {
+            border = "curved",
+          },
+        })
 
-  -- Explorador de archivos: oil.nvim
-  {
-    "stevearc/oil.nvim",
-    opts = {},
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-    config = function()
-      require("oil").setup({
-        view_options = {
-          show_hidden = true, -- mostrar archivos ocultos
-        },
-      })
-      -- Atajo para abrir Oil en el directorio actual
-      vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Abrir Oil" })
-    end,
-  },
+        -- Abrir Claude en una terminal flotante
+        vim.keymap.set("n", "<leader>ac", function()
+          vim.cmd("ToggleTerm direction=float cmd='claude'")
+        end, { desc = "Abrir Claude en flotante" })
+      end,
+    },
+      -- Explorador de archivos: oil.nvim
+      {
+        "stevearc/oil.nvim",
+        opts = {},
+        dependencies = { "nvim-tree/nvim-web-devicons" },
+        config = function()
+          require("oil").setup({
+            view_options = {
+              show_hidden = true, -- mostrar archivos ocultos
+            },
+          })
+          -- Atajo para abrir Oil en el directorio actual
+          vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Abrir Oil" })
+        end,
+      },
 
   -- Dashboard con waifu
   {

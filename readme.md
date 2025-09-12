@@ -9,6 +9,10 @@ Configuración personalizada de **Neovim** para Windows, con soporte para LSP, a
 ## 📦 Requisitos
 
 Antes de empezar, instala:
+antes de continuar necesitaremos instalado
+[NodeJS](https://nodejs.org/es)
+[Python](https://www.python.org/downloads/)
+
 
 1. **Neovim**  
    Descargar desde [neovim.io](https://neovim.io/) o con [Scoop](https://scoop.sh/):
