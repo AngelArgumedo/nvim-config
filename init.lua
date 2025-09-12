@@ -328,7 +328,9 @@ require("lualine").setup({
   },
   sections = {
     lualine_a = { "mode" }, -- Modo (NORMAL, INSERT, VISUAL...) con color
-    lualine_b = { "branch", "diff", "diagnostics" }, -- Rama Git, cambios y diagnósticos LSP
+    lualine_b = { "branch", 
+            {"diff", symbols = {added = "🔰", modified="🔄", removed="💥"} }, 
+            "diagnostics" }, -- Rama Git, cambios y diagnósticos LSP
     lualine_c = { "filename" }, -- Nombre del archivo activo
     lualine_x = { "encoding", "fileformat", "filetype" }, -- UTF-8, formato y tipo de archivo
     lualine_y = { "progress" }, -- Progreso en el archivo
