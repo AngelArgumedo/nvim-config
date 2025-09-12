@@ -2,6 +2,10 @@
 --   Neovim Config (init.lua)
 -- =========================
 
+-- Leader key
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
+
 -- Bootstrap lazy.nvim (gestor de plugins)
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -22,6 +26,63 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
   -- Tema
   { "folke/tokyonight.nvim", lazy = false, priority = 1000, opts = {} },
+
+
+    -- Linting
+    {
+      "mfussenegger/nvim-lint",
+      config = function()
+        local lint = require("lint")
+
+        lint.linters_by_ft = {
+          javascript = { "eslint_d" },
+          typescript = { "eslint_d" },
+          python = { "flake8" },
+        }
+
+        -- Auto-lint al guardar
+        vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+          callback = function()
+            lint.try_lint()
+          end,
+        })
+      end,
+    },
+
+    -- Formatting
+    {
+      "stevearc/conform.nvim",
+      config = function()
+        require("conform").setup({
+          formatters_by_ft = {
+            javascript = { "prettier" },
+            typescript = { "prettier" },
+            python = { "black" },
+          },
+        })
+
+        -- Keymap para formatear
+        vim.keymap.set("n", "<leader>f", function()
+          require("conform").format({ async = true, lsp_fallback = true })
+        end, { desc = "Format file" })
+      end,
+    },
+
+  -- Explorador de archivos: oil.nvim
+  {
+    "stevearc/oil.nvim",
+    opts = {},
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    config = function()
+      require("oil").setup({
+        view_options = {
+          show_hidden = true, -- mostrar archivos ocultos
+        },
+      })
+      -- Atajo para abrir Oil en el directorio actual
+      vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Abrir Oil" })
+    end,
+  },
 
   -- Dashboard con waifu
   {
@@ -185,7 +246,7 @@ require("lazy").setup({
         dashboard.button("q", "◆  Salir", ":qa<CR>"),
       }
 
-      dashboard.section.footer.val = 
+      dashboard.section.footer.val =
         "✦  想像できれば、プログラムできます。✦"
 
       alpha.setup(dashboard.config)
@@ -374,6 +435,7 @@ cmp.setup({
 })
 
 
+
 -- =========================
 -- Atajos rápidos (Keymaps)
 -- =========================
@@ -419,3 +481,12 @@ vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Error siguiente" }
 
 -- dashboard
 vim.keymap.set("n", "<leader>a", ":Alpha<CR>", { desc = "Volver al Dashboard" })
+
+-- Terminal
+-- Salir de terminal a modo normal con <Esc>
+vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]], { desc = "Salir de terminal a normal" })
+-- Abrir terminal abajo y entrar directamente en modo terminal
+vim.keymap.set("n", "<leader>tt", ":split | terminal<CR>i", { desc = "Terminal abajo" })
+-- Abrir terminal a la derecha y entrar directamente en modo terminal
+vim.keymap.set("n", "<leader>tv", ":vsplit | terminal<CR>i", { desc = "Terminal derecha" })
+

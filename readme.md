@@ -38,6 +38,13 @@ Antes de empezar, instala:
     ```
     - Esto instala `gcc`, `make`, etc.
 
+5. **Instala dependencias externas**
+```powershell
+npm install -g eslint_d prettier
+pip install flake8 black
+
+```
+
 ---
 # ⚙️ Instalación
 
