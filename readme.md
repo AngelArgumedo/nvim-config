@@ -268,6 +268,17 @@ git config --global --add safe.directory "C:/Users/YourUser/AppData/Local/nvim-d
 :checkhealth lazy # Check plugin manager
 :checkhealth lsp  # Check LSP configuration
 ```
+## How to install whit .ps1 script
+1. Download the JavaScript file and save it in the same folder as the .ps1 file.
+2. Open the .ps1 file and run the script.
+3. Follow the instructions in the script.
+
+or
+
+execute the following command:
+```powershell
+powershell -ExecutionPolicy Bypass -File install.ps1 -OpenAiApiKey "tu-api-key"
+```
 
 ## 🤝 Contributing
 
