@@ -40,8 +40,7 @@ cmp.setup({
     end, { 'i', 's' }),
   }),
   sources = cmp.config.sources({
-    { name = 'codeium' }, -- AI autocompletado con máxima prioridad
-    { name = 'nvim_lsp' },
+    { name = 'nvim_lsp' }, -- LSP con máxima prioridad (Supermaven funciona independiente)
     { name = 'vsnip' },
     { name = 'path' },
   }, {
@@ -51,7 +50,6 @@ cmp.setup({
     format = function(entry, vim_item)
       -- Iconos para diferentes fuentes
       local icons = {
-        codeium = "🤖",
         nvim_lsp = "🔧",
         vsnip = "✂️",
         buffer = "📝",
@@ -60,7 +58,6 @@ cmp.setup({
       }
 
       local source_names = {
-        codeium = "[AI]",
         nvim_lsp = "[LSP]",
         vsnip = "[Snippet]",
         buffer = "[Buffer]",

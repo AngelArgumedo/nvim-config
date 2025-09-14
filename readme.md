@@ -16,9 +16,9 @@
 ## 🚀 Features
 
 ### 🤖 AI-Powered Development
-- **Codeium Integration**: Free AI autocompletion (like Copilot)
+- **Supermaven Integration**: Ultra-fast AI autocompletion (supports OpenAI API)
 - **Claude Code Integration**: Floating terminal with `<leader>ac`
-- **Smart Suggestions**: Context-aware code completion
+- **Smart Suggestions**: Context-aware code completion with inline display
 
 ### 🛠️ Language Support
 - **LSP Servers**: Lua, Python, TypeScript/JavaScript, HTML, CSS, PHP, Go
@@ -85,11 +85,13 @@ nvim
 # Lazy.nvim will automatically install all plugins
 ```
 
-3. **Setup Codeium** (AI autocompletion):
+3. **Setup Supermaven** (AI autocompletion):
 ```bash
-# In Neovim, run:
-:Codeium Auth
-# Follow the authentication process
+# Set your OpenAI API key (recommended):
+$env:OPENAI_API_KEY = "your-openai-api-key-here"
+
+# Or use free version:
+# In Neovim, run: :SupermavenUseFree
 ```
 
 4. **Configure Git integration**:
@@ -162,9 +164,12 @@ git config --global mergetool.keepBackup false
 | `<leader>tv` | Vertical terminal | Open terminal to the side |
 | `<C-\>` | Toggle terminal | Quick toggle terminal |
 
-### 📝 Editing
+### 📝 Editing & AI
 | Key | Action | Description |
 |-----|--------|-------------|
+| `<Tab>` | Accept AI suggestion | Accept full Supermaven suggestion |
+| `<C-j>` | Accept word | Accept one word from suggestion |
+| `<C-]>` | Clear suggestion | Clear current AI suggestion |
 | `<S-h>` / `<S-l>` | Switch buffers | Navigate between buffers |
 | `<C-h/j/k/l>` | Window navigation | Move between splits |
 | `gcc` | Toggle comment | Comment/uncomment line |
@@ -179,9 +184,10 @@ git config --global mergetool.keepBackup false
 - **Dashboard**: Rotating waifu ASCII art with Japanese footer
 
 ### AI Autocompletion
-- **Codeium**: Free GitHub Copilot alternative
-- **Priority Order**: AI → LSP → Snippets → Buffer → Path
-- **Visual Indicator**: 🤖 [AI] for AI suggestions
+- **Supermaven**: Ultra-fast AI autocompletion (faster than Copilot)
+- **OpenAI API Support**: Use your own API key for unlimited suggestions
+- **Inline Suggestions**: Ghost text appears while typing
+- **Smart Accept**: Tab for full suggestion, Ctrl+J for word-by-word
 
 ### Dashboard Buttons
 | Key | Action | Command |
@@ -232,9 +238,11 @@ lua/
 :Mason            # Reinstall LSP servers
 ```
 
-**Codeium not working:**
+**Supermaven not working:**
 ```bash
-:Codeium Auth     # Re-authenticate
+:SupermavenStart     # Start Supermaven
+:SupermavenStop      # Stop Supermaven
+:SupermavenRestart   # Restart Supermaven
 ```
 
 **Git merge conflicts not opening in Neovim:**
@@ -277,7 +285,7 @@ This configuration is open source and available under the [MIT License](LICENSE)
 
 - **Tokyo Night**: Beautiful color scheme
 - **Lazy.nvim**: Fast and modern plugin manager
-- **Codeium**: Free AI autocompletion
+- **Supermaven**: Ultra-fast AI autocompletion
 - **Neovim Community**: Amazing ecosystem and plugins
 
 ---
