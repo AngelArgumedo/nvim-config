@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//e/Documentos/Aprendiendo programacion/QA/**)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

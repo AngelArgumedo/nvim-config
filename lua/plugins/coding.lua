@@ -26,7 +26,8 @@ return {
           "cssls",
           "emmet_ls",
           "tailwindcss",
-          "phpactor",
+          "intelephense", -- Mejor LSP para PHP
+          "phpactor",     -- Backup para PHP
           "gopls",
         },
       })
@@ -77,7 +78,10 @@ return {
 
       lint.linters_by_ft = {
         javascript = { "eslint_d" },
+        javascriptreact = { "eslint_d" },
         typescript = { "eslint_d" },
+        typescriptreact = { "eslint_d" },
+        php = { "phpcs" },
         python = { "flake8" },
       }
 
@@ -99,11 +103,16 @@ return {
       require("conform").setup({
         formatters_by_ft = {
           javascript = { "prettier" },
+          javascriptreact = { "prettier" },
           typescript = { "prettier" },
+          typescriptreact = { "prettier" },
           python = { "black" },
           lua = { "stylua" },
-          php = { "prettier" },
+          php = { "php_cs_fixer" }, -- Mejor para PHP
           go = { "gofmt", "goimports" },
+          html = { "prettier" },
+          css = { "prettier" },
+          json = { "prettier" },
         },
         format_on_save = {
           timeout_ms = 500,

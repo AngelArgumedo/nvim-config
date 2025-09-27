@@ -162,7 +162,20 @@ return {
         { "<leader>r", desc = "Recent files" },
         { "<leader>m", desc = "Show unsaved files" },
         { "<leader>fm", desc = "Format file" },
-        { "<leader>ac", desc = "Abrir Claude flotante" },
+        { "<leader>ac", desc = "🤖 Abrir Claude" },
+        { "<leader>t1", desc = "Terminal #1" },
+        { "<leader>t2", desc = "Terminal #2" },
+        { "<leader>t3", desc = "Terminal #3" },
+        { "<leader>t4", desc = "Terminal #4" },
+        { "<leader>t5", desc = "Terminal #5" },
+        { "<leader>tf", desc = "🪟 Terminal flotante" },
+        { "<leader>th", desc = "📐 Terminal horizontal" },
+        { "<leader>tv", desc = "📏 Terminal vertical" },
+        { "<leader>tl", desc = "📋 Listar terminales" },
+        { "<leader>tn", desc = "🔢 Nueva terminal" },
+        { "<leader>tg", desc = "📊 Git status" },
+        { "<leader>td", desc = "🚀 Dev command" },
+        { "<leader>tq", desc = "❌ Cerrar todas" },
         { "]c", desc = "Next conflict/hunk" },
         { "[c", desc = "Previous conflict/hunk" },
         { "-", desc = "Abrir Oil" },
@@ -170,81 +183,100 @@ return {
     end,
   },
 
-  -- Iconos para devicons
+  -- Iconos para devicons (configuración con iconos reales de tecnologías)
   {
     "nvim-tree/nvim-web-devicons",
-    opts = {
-      override = {
-        zsh = {
-          icon = "",
-          color = "#428850",
-          cterm_color = "65",
-          name = "Zsh"
-        }
-      },
-      color_icons = true,
-      default = true,
-      strict = true,
-      override_by_filename = {
-        [".gitignore"] = {
-          icon = "",
-          color = "#f1502f",
-          name = "Gitignore"
-        }
-      },
-      override_by_extension = {
-        ["log"] = {
-          icon = "",
-          color = "#81e043",
-          name = "Log"
-        }
-      },
-    }
+    config = function()
+      require("config.devicons").setup()
+    end,
   },
 
-  -- Terminal flotante
+  -- Terminal flotante mejorado
   {
     "akinsho/toggleterm.nvim",
     version = "*",
     config = function()
-      require("toggleterm").setup({
-        direction = "float",
-        float_opts = {
-          border = "curved",
-          width = math.floor(vim.o.columns * 0.8),
-          height = math.floor(vim.o.lines * 0.8),
+      require("config.toggleterm")
+    end,
+  },
+
+  -- Notificaciones bonitas
+  {
+    "rcarriga/nvim-notify",
+    config = function()
+      require("config.notify")
+    end,
+  },
+
+  -- Scroll suave
+  {
+    "karb94/neoscroll.nvim",
+    event = "VeryLazy",
+    config = function()
+      require("config.neoscroll")
+    end,
+  },
+
+  -- Líneas de indentación visual
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    main = "ibl",
+    event = { "BufReadPost", "BufNewFile" },
+    opts = {
+      indent = {
+        char = "│",
+        tab_char = "│",
+      },
+      scope = {
+        enabled = true,
+        show_start = true,
+        show_end = false,
+      },
+      exclude = {
+        filetypes = {
+          "help", "alpha", "dashboard", "neo-tree", "Trouble", "trouble",
+          "lazy", "mason", "notify", "toggleterm", "lazyterm", ""
         },
-        open_mapping = [[<C-\>]],
+        buftypes = { "terminal", "nofile", "quickfix", "prompt" },
+      },
+    },
+    config = function(_, opts)
+      require("ibl").setup(opts)
+
+      -- Configurar highlights
+      vim.api.nvim_set_hl(0, "IblIndent", { fg = "#3B4261" })
+      vim.api.nvim_set_hl(0, "IblScope", { fg = "#61AFEF" })
+
+      -- Keymaps básicos
+      vim.keymap.set("n", "<leader>ui", "<cmd>IBLToggle<cr>", { desc = "🌈 Toggle indent lines" })
+      vim.keymap.set("n", "<leader>us", "<cmd>IBLToggleScope<cr>", { desc = "🎯 Toggle scope highlight" })
+
+      -- Función para cambiar estilo de líneas
+      local styles = {
+        { char = "│", name = "línea continua" },
+        { char = "┊", name = "línea punteada" },
+        { char = "▏", name = "barra fina" },
+      }
+      local current_style = 1
+
+      local function cycle_indent_style()
+        current_style = current_style % #styles + 1
+        local style = styles[current_style]
+
+        require("ibl").update({
+          indent = { char = style.char },
+          scope = { char = style.char },
+        })
+
+        vim.notify("🎨 Estilo: " .. style.name, vim.log.levels.INFO, { title = "Indent Lines" })
+      end
+
+      vim.keymap.set("n", "<leader>uc", cycle_indent_style, { desc = "🎨 Cambiar estilo de líneas" })
+
+      vim.notify("🌈 Indent lines configurado", vim.log.levels.INFO, {
+        title = "Indent Blankline",
+        timeout = 1000,
       })
-
-      -- Terminal dedicado para Claude (singleton)
-      local claude_terminal = require("toggleterm.terminal").Terminal:new({
-        cmd = "claude",
-        direction = "float",
-        float_opts = {
-          border = "curved",
-          width = math.floor(vim.o.columns * 0.8),
-          height = math.floor(vim.o.lines * 0.8),
-        },
-        on_open = function(term)
-          vim.cmd("startinsert!")
-        end,
-        on_close = function(term)
-          vim.cmd("startinsert!")
-        end,
-      })
-
-      -- Keymap personalizado para Claude - reutiliza la misma terminal
-      vim.keymap.set("n", "<leader>ac", function()
-        claude_terminal:toggle()
-      end, { desc = "Abrir Claude en flotante" })
-
-      -- Keymaps adicionales para terminal
-      local keymap = vim.keymap.set
-      keymap("n", "<leader>tt", ":split | terminal<CR>i", { desc = "Terminal abajo" })
-      keymap("n", "<leader>tf", "<cmd>ToggleTerm direction=float<cr>", { desc = "Terminal flotante" })
-      keymap("n", "<leader>th", "<cmd>ToggleTerm size=15 direction=horizontal<cr>", { desc = "Terminal horizontal" })
-      keymap("n", "<leader>tv", "<cmd>ToggleTerm size=50 direction=vertical<cr>", { desc = "Terminal vertical" })
     end,
   },
 }

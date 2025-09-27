@@ -26,16 +26,48 @@ local servers = {
     },
   },
   pyright = {},
-  ts_ls = {},
+  -- TypeScript/JavaScript mejorado para React
+  ts_ls = {
+    filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
+    settings = {
+      typescript = {
+        preferences = {
+          importModuleSpecifier = "relative"
+        }
+      },
+      javascript = {
+        preferences = {
+          importModuleSpecifier = "relative"
+        }
+      }
+    }
+  },
   html = {},
   cssls = {},
   emmet_ls = {
-    filetypes = { "html", "css", "scss", "javascript", "typescript", "jsx", "tsx" },
+    filetypes = { "html", "css", "scss", "javascript", "javascriptreact", "typescript", "typescriptreact" },
   },
   tailwindcss = {},
-  -- PHP Language Server
-  phpactor = {
+  -- PHP Language Server mejorado
+  intelephense = {
     filetypes = { "php" },
+    settings = {
+      intelephense = {
+        files = {
+          maxSize = 1000000;
+        };
+        completion = {
+          insertUseDeclaration = true,
+          fullyQualifyGlobalConstantsAndFunctions = false,
+        };
+        diagnostics = {
+          enable = true,
+        };
+        format = {
+          enable = true,
+        };
+      }
+    },
     root_dir = function(pattern)
       return require('lspconfig.util').root_pattern('composer.json', '.git')(pattern)
     end,

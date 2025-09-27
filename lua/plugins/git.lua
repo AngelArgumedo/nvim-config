@@ -18,6 +18,15 @@ return {
     end,
   },
 
+  -- LazyGit integración
+  {
+    "kdheepak/lazygit.nvim",
+    keys = {
+      { "<leader>gg", "<cmd>LazyGit<cr>", desc = "LazyGit" },
+      { "<leader>gG", "<cmd>LazyGitConfig<cr>", desc = "LazyGit Config" },
+    },
+  },
+
   -- Señales de Git en la columna lateral
   {
     "lewis6991/gitsigns.nvim",

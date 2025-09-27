@@ -86,13 +86,21 @@ keymap("t", "<C-k>", [[<Cmd>wincmd k<CR>]], { desc = "Terminal: ir arriba" })
 keymap("t", "<C-l>", [[<Cmd>wincmd l<CR>]], { desc = "Terminal: ir derecha" })
 
 -- =========================
--- Diagnósticos LSP
+-- Diagnósticos y navegación LSP
 -- =========================
 
 keymap("n", "<leader>d", vim.diagnostic.open_float, { desc = "Ver error" })
 keymap("n", "[d", vim.diagnostic.goto_prev, { desc = "Error anterior" })
 keymap("n", "]d", vim.diagnostic.goto_next, { desc = "Error siguiente" })
 keymap("n", "<leader>dl", vim.diagnostic.setloclist, { desc = "Lista de diagnósticos" })
+
+-- Navegación de código (equivalente a Ctrl+Click en VSCode)
+keymap("n", "gd", vim.lsp.buf.definition, { desc = "Ir a definición" })
+keymap("n", "gD", vim.lsp.buf.declaration, { desc = "Ir a declaración" })
+keymap("n", "gr", vim.lsp.buf.references, { desc = "Ver referencias" })
+keymap("n", "gi", vim.lsp.buf.implementation, { desc = "Ir a implementación" })
+keymap("n", "K", vim.lsp.buf.hover, { desc = "Documentación hover" })
+keymap("n", "<C-k>", vim.lsp.buf.signature_help, { desc = "Ayuda de signatura" })
 
 -- =========================
 -- Manejo de archivos modificados
@@ -120,3 +128,10 @@ end, { desc = "Show unsaved files" })
 
 -- Guardar todos los archivos modificados
 keymap("n", "<leader>W", "<cmd>wall<CR>", { desc = "Save all modified files" })
+
+-- =========================
+-- Font and Icon Testing
+-- =========================
+
+-- Cargar utilidades de prueba de fuentes
+require("config.font-test")

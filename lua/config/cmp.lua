@@ -40,7 +40,7 @@ cmp.setup({
     end, { 'i', 's' }),
   }),
   sources = cmp.config.sources({
-    { name = 'nvim_lsp' }, -- LSP con máxima prioridad (Supermaven funciona independiente)
+    { name = 'nvim_lsp' }, -- LSP habilitado para autocompletado inteligente
     { name = 'vsnip' },
     { name = 'path' },
   }, {

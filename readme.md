@@ -34,6 +34,7 @@
 - **Fuzzy Finder**: Telescope with custom pickers
 
 ### ⚡ Git Integration
+- **LazyGit**: Terminal UI para Git con navegación visual intuitiva
 - **GitSigns**: Visual indicators for changes, additions, deletions
 - **DiffView**: Professional merge conflict resolution
 - **Git Integration**: Neovim as default Git editor (no more VSCode!)
@@ -44,32 +45,88 @@
 - **Which-Key**: Interactive keymap hints
 - **Auto-pairs**: Intelligent bracket/quote completion
 - **Terminal Integration**: Multiple terminal layouts
+- **Markdown Preview**: Renderizado inline de Markdown mientras escribes
+- **Testing Integration**: Neotest para ejecutar y visualizar tests
+- **Debugging**: DAP (Debug Adapter Protocol) integrado
 
 ## 📦 Installation
 
-### Prerequisites (Windows)
+### 🔧 Prerequisites & Dependencies
 
-1. **Install Scoop** (package manager):
+Esta configuración requiere las siguientes herramientas instaladas:
+
+#### 📥 Instaladores de Paquetes
+- **Scoop**: [https://scoop.sh/](https://scoop.sh/)
+- **Node.js**: [https://nodejs.org/](https://nodejs.org/)
+- **Python**: [https://python.org/](https://python.org/)
+
+#### 🛠️ Herramientas Esenciales
+- **Neovim**: [https://neovim.io/](https://neovim.io/)
+- **Git**: [https://git-scm.com/](https://git-scm.com/)
+- **LazyGit**: [https://github.com/jesseduffield/lazygit](https://github.com/jesseduffield/lazygit)
+- **Ripgrep**: [https://github.com/BurntSushi/ripgrep](https://github.com/BurntSushi/ripgrep)
+- **FZF**: [https://github.com/junegunn/fzf](https://github.com/junegunn/fzf)
+
+#### 🎨 Fuentes
+- **JetBrains Mono Nerd Font**: [https://www.nerdfonts.com/font-downloads](https://www.nerdfonts.com/font-downloads)
+- **Cascadia Code**: [https://github.com/microsoft/cascadia-code](https://github.com/microsoft/cascadia-code)
+
+#### 🔧 LSP y Formatters
+- **Tree-sitter CLI**: [https://tree-sitter.github.io/tree-sitter/](https://tree-sitter.github.io/tree-sitter/)
+- **Prettier**: [https://prettier.io/](https://prettier.io/)
+- **ESLint**: [https://eslint.org/](https://eslint.org/)
+- **Black**: [https://black.readthedocs.io/](https://black.readthedocs.io/)
+- **StyLua**: [https://github.com/JohnnyMorganz/StyLua](https://github.com/JohnnyMorganz/StyLua)
+
+### 🚀 Instalación Automática (Recomendada)
+
+1. **Instalar Scoop** (administrador de paquetes):
 ```powershell
 Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
 irm get.scoop.sh | iex
 ```
 
-2. **Install Required Dependencies**:
+2. **Ejecutar script de instalación automática**:
+```powershell
+# Descargar e instalar todo automáticamente
+powershell -ExecutionPolicy Bypass -File install-nerd-font.ps1
+
+# Con API key de OpenAI (opcional)
+powershell -ExecutionPolicy Bypass -File install-nerd-font.ps1 -OpenAiApiKey "tu-api-key"
+```
+
+### 🔧 Instalación Manual
+
+1. **Instalar dependencias básicas**:
 ```bash
-# Core tools
+# Herramientas esenciales
 scoop install neovim git nodejs python go php composer
 scoop bucket add extras
 scoop install extras/vcredist2022
 
-# Formatters and tools
+# Herramientas adicionales
+scoop install ripgrep fzf fd lazygit
+
+# Formatters y linters
 npm install -g prettier eslint_d @prettier/plugin-php tree-sitter-cli
 pip install black flake8
 scoop install stylua
 
-# Font (recommended)
+# Fuente Nerd Font
 scoop bucket add nerd-fonts
 scoop install JetBrainsMono-NF
+```
+
+2. **Verificar instalación**:
+```bash
+# Verificar que todas las herramientas estén instaladas
+nvim --version
+git --version
+node --version
+python --version
+lazygit --version
+rg --version
+fd --version
 ```
 
 ### Setup Neovim Configuration
@@ -137,6 +194,8 @@ git config --global mergetool.keepBackup false
 ### 🌿 Git Operations
 | Key | Action | Description |
 |-----|--------|-------------|
+| `<leader>gg` | LazyGit | Open LazyGit interface |
+| `<leader>gG` | LazyGit Config | Open LazyGit configuration |
 | `<leader>gd` | Git diff | Open diff view |
 | `<leader>gc` | Close diff | Close diff view |
 | `<leader>gh` | File history | Show file history |
@@ -268,17 +327,64 @@ git config --global --add safe.directory "C:/Users/YourUser/AppData/Local/nvim-d
 :checkhealth lazy # Check plugin manager
 :checkhealth lsp  # Check LSP configuration
 ```
-## How to install whit .ps1 script
-1. Download the JavaScript file and save it in the same folder as the .ps1 file.
-2. Open the .ps1 file and run the script.
-3. Follow the instructions in the script.
+## ✨ Nuevas Características Agregadas
 
-or
+### 📝 Renderizado de Markdown en Tiempo Real
+- **render-markdown.nvim**: Renderiza Markdown inline mientras escribes
+- **Características**:
+  - Headers con diferentes tamaños y colores
+  - **Texto en negrita** y *cursiva* renderizado visualmente
+  - `código inline` con highlighting
+  - Listas con bullets apropiados
+  - Links clickeables y tablas formateadas
+  - Se activa automáticamente en archivos `.md`
 
-execute the following command:
+### 🚀 LazyGit Integration
+- **LazyGit UI**: Interfaz terminal visual para Git
+- **Funcionalidades**:
+  - Vista visual del estado del repositorio
+  - Commits, pushes, pulls con navegación simple
+  - Gestión de branches y merges visualmente
+  - Resolución de conflictos interactiva
+  - Diffs y logs de forma gráfica
+- **Keybindings**:
+  - `<leader>gg` - Abrir LazyGit
+  - `<leader>gG` - Configuración de LazyGit
+
+### 🎯 Navegación LazyGit
+Una vez abierto LazyGit:
+- `↑↓←→` - Navegar entre paneles
+- `Enter` - Seleccionar/confirmar
+- `Space` - Stage/unstage archivos
+- `c` - Commit
+- `P` - Push, `p` - Pull
+- `n` - Nueva branch
+- `m` - Merge
+- `d` - Ver diff
+- `l` - Ver logs
+- `q` - Salir
+
+## 📋 Instalación con Script PowerShell
+
+### Opción 1: Instalación Automática Completa
 ```powershell
-powershell -ExecutionPolicy Bypass -File install.ps1 -OpenAiApiKey "tu-api-key"
+# Instalar todo (Neovim + dependencias + fuentes + configuración)
+powershell -ExecutionPolicy Bypass -File install-nerd-font.ps1
 ```
+
+### Opción 2: Con API Key de OpenAI
+```powershell
+# Instalar con clave API para Supermaven
+powershell -ExecutionPolicy Bypass -File install-nerd-font.ps1 -OpenAiApiKey "tu-api-key"
+```
+
+### ¿Qué hace el script?
+1. Instala Scoop si no está instalado
+2. Instala todas las dependencias automáticamente
+3. Descarga e instala JetBrains Mono Nerd Font
+4. Clona la configuración de Neovim
+5. Configura Git para usar Neovim como editor
+6. Instala y configura Supermaven con tu API key (opcional)
 
 ## 🤝 Contributing
 
