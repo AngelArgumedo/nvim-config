@@ -12,9 +12,8 @@ require("nvim-treesitter.configs").setup({
     "markdown",
     "markdown_inline",
 
-    -- Frontend / React
+    -- Frontend / React + Angular
     "javascript",
-    "jsx",
     "typescript",
     "tsx",
     "html",
