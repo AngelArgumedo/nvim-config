@@ -23,6 +23,7 @@ require("lazy").setup({
     { import = "plugins.editor" },
     { import = "plugins.coding" },
     { import = "plugins.git" },
+    { import = "plugins.claude-code" },
   },
   defaults = {
     lazy = false,

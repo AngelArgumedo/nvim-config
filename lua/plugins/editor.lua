@@ -233,11 +233,13 @@ return {
     ft = { "markdown" },
   },
 
-  -- Claude Workflow Optimization
+  -- Claude Workflows (mantener para workflows automatizados)
+  -- NOTA: La integración principal de Claude está en plugins/claude-code.lua
   {
-    "nvim-lua/plenary.nvim", -- Dependency for Claude workflow
+    "nvim-lua/plenary.nvim",
     config = function()
-      require("config.claude-workflow").setup()
+      -- Cargar solo el sistema de workflows (sin terminal)
+      require("config.claude-workflows").setup()
     end,
     event = "VeryLazy",
   },
