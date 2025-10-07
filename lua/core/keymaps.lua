@@ -24,6 +24,9 @@ keymap("n", "<leader>h", ":nohlsearch<CR>", { desc = "Quitar highlight" })
 keymap("n", "<leader>e", ":NvimTreeToggle<CR>", { desc = "Toggle explorador" })
 keymap("n", "-", "<cmd>Oil<cr>", { desc = "Abrir Oil" })
 
+-- Proyectos recientes
+keymap("n", "<leader>fp", "<cmd>Telescope projects<CR>", { desc = "Proyectos recientes" })
+
 -- =========================
 -- Manejo de ventanas
 -- =========================
@@ -93,6 +96,8 @@ keymap("n", "<leader>d", vim.diagnostic.open_float, { desc = "Ver error" })
 keymap("n", "[d", vim.diagnostic.goto_prev, { desc = "Error anterior" })
 keymap("n", "]d", vim.diagnostic.goto_next, { desc = "Error siguiente" })
 keymap("n", "<leader>dl", vim.diagnostic.setloclist, { desc = "Lista de diagnósticos" })
+keymap("n", "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", { desc = "Toggle Trouble diagnostics" })
+keymap("n", "<leader>xd", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", { desc = "Buffer diagnostics" })
 
 -- Navegación de código (equivalente a Ctrl+Click en VSCode)
 keymap("n", "gd", vim.lsp.buf.definition, { desc = "Ir a definición" })

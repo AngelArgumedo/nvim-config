@@ -24,7 +24,10 @@ opt.incsearch = true
 opt.termguicolors = true
 opt.background = "dark"
 opt.signcolumn = "yes"
-opt.wrap = false
+opt.wrap = true              -- Activar word wrap para líneas largas
+opt.linebreak = true         -- Romper líneas en caracteres apropiados (espacios)
+opt.breakindent = true       -- Mantener indentación en líneas envueltas
+opt.showbreak = "↪ "         -- Indicador visual para líneas envueltas
 opt.cursorline = true
 
 -- Comportamiento

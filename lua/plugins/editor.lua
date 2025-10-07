@@ -105,10 +105,39 @@ return {
   {
     "nvim-telescope/telescope.nvim",
     tag = "0.1.8",
-    dependencies = { "nvim-lua/plenary.nvim" },
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "ahmedkhalf/project.nvim"  -- Para gestión de proyectos recientes
+    },
     cmd = "Telescope",
     config = function()
       require("config.telescope")
+    end,
+  },
+
+  -- Gestión de proyectos recientes (estilo VSCode)
+  {
+    "ahmedkhalf/project.nvim",
+    config = function()
+      require("project_nvim").setup({
+        -- Métodos de detección (archivos/carpetas que indican que es un proyecto)
+        detection_methods = { "pattern", "lsp" },
+
+        -- Patrones para detectar raíz del proyecto
+        patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json", "pom.xml", "go.mod", "composer.json", "requirements.txt", ".gitignore" },
+
+        -- No cambiar automáticamente al directorio del proyecto
+        silent_chdir = false,
+
+        -- Mostrar mensajes cuando cambias de proyecto
+        show_hidden = false,
+
+        -- Scope de búsqueda
+        scope_chdir = 'global',
+      })
+
+      -- Integrar con Telescope
+      require('telescope').load_extension('projects')
     end,
   },
 

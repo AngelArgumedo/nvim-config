@@ -146,3 +146,53 @@ autocmd({ "TextChanged", "TextChangedI" }, {
     end
   end,
 })
+
+-- =========================
+-- Auto-cerrar buffers inactivos (optimización de memoria)
+-- =========================
+
+-- Tabla para rastrear última actividad de cada buffer
+_G.buffer_last_activity = _G.buffer_last_activity or {}
+
+-- Actualizar timestamp cuando se usa un buffer
+autocmd({ "BufEnter", "CursorHold", "CursorHoldI", "FocusGained" }, {
+  desc = "Track buffer activity",
+  group = augroup("buffer-activity-tracker", { clear = true }),
+  callback = function(event)
+    _G.buffer_last_activity[event.buf] = vim.loop.now()
+  end,
+})
+
+-- Revisar y cerrar buffers inactivos cada 5 minutos
+autocmd("CursorHold", {
+  desc = "Close inactive buffers after 20 minutes",
+  group = augroup("auto-close-inactive-buffers", { clear = true }),
+  callback = function()
+    local current_time = vim.loop.now()
+    local timeout = 20 * 60 * 1000 -- 20 minutos en milisegundos
+
+    for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+      -- Solo procesar buffers válidos, cargados y no modificados
+      if vim.api.nvim_buf_is_valid(bufnr)
+         and vim.api.nvim_buf_is_loaded(bufnr)
+         and not vim.bo[bufnr].modified
+         and vim.bo[bufnr].buflisted then
+
+        local last_activity = _G.buffer_last_activity[bufnr] or current_time
+        local inactive_time = current_time - last_activity
+
+        -- Si el buffer ha estado inactivo por más de 20 minutos
+        if inactive_time > timeout then
+          -- No cerrar el buffer actual
+          if bufnr ~= vim.api.nvim_get_current_buf() then
+            -- Verificar que no sea un tipo especial (terminal, help, etc.)
+            local buftype = vim.bo[bufnr].buftype
+            if buftype ~= "terminal" and buftype ~= "help" and buftype ~= "quickfix" then
+              pcall(vim.api.nvim_buf_delete, bufnr, { force = false })
+            end
+          end
+        end
+      end
+    end
+  end,
+})

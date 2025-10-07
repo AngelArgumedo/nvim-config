@@ -10,16 +10,16 @@ local ascii = require("utils.ascii")
 local header = ascii.get_random_waifu()
 dashboard.section.header.val = header
 
--- Opciones del menú principal con iconos profesionales
+-- Opciones del menú principal con iconos compatibles
 dashboard.section.buttons.val = {
-  dashboard.button("f", "  Find Files", "<cmd>Telescope find_files<CR>"),
-  dashboard.button("r", "  Recent Files", "<cmd>Telescope oldfiles<CR>"),
-  dashboard.button("t", "  Find Text", "<cmd>Telescope live_grep<CR>"),
-  dashboard.button("n", "  New File", "<cmd>ene<CR>"),
-  dashboard.button("p", "  Projects", "<cmd>Telescope git_files<CR>"),
-  dashboard.button("s", "󰒲  Lazy Sync", "<cmd>Lazy sync<CR>"),
-  dashboard.button("c", "  Configuration", "<cmd>e $MYVIMRC<CR>"),
-  dashboard.button("q", "  Quit", "<cmd>qa<CR>"),
+  dashboard.button("f", "   Find Files", "<cmd>Telescope find_files<CR>"),
+  dashboard.button("r", "   Recent Files", "<cmd>Telescope oldfiles<CR>"),
+  dashboard.button("t", "   Find Text", "<cmd>Telescope live_grep<CR>"),
+  dashboard.button("n", "   New File", "<cmd>ene<CR>"),
+  dashboard.button("p", "   Projects", "<cmd>Telescope projects<CR>"),
+  dashboard.button("s", "   Lazy Sync", "<cmd>Lazy sync<CR>"),
+  dashboard.button("c", "   Configuration", "<cmd>e $MYVIMRC<CR>"),
+  dashboard.button("q", "   Quit", "<cmd>qa<CR>"),
 }
 
 -- Footer personalizado
